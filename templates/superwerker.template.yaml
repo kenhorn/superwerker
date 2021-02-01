@@ -10,6 +10,9 @@ Parameters:
     Type: String
     Default: aws
     Description: Sub domain used for RootMail feature
+  NotificationsMail:
+    Type: String
+    Description: Mail Address to send notifications to
   IncludeBudget:
     AllowedValues:
       - 'Yes'
@@ -71,6 +74,7 @@ Metadata:
       Parameters:
       - Domain
       - Subdomain
+      - NotificationsMail
     - Label:
         default: Advanced Configuration
       Parameters:
@@ -80,6 +84,8 @@ Metadata:
         default: Domain for automated DNS configuration
       Subdomain:
         default: Subdomain for automated DNS configuration
+      NotificationsMail:
+        default: Mail Address for Notifications
       TemplateUrlPrefix:
         default: Prefix for CloudFormation Templates
       IncludeBudget:
@@ -248,6 +254,8 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: !Sub ${TemplateUrlPrefix}/templates/notifications.yaml
+      Parameters:
+        NotificationsMail: !Ref NotificationsMail
 
 Outputs:
 
